@@ -3,11 +3,11 @@
 #include <regex>
 #include <string>
 
-#include "buy_sell_stock.hpp"
-#include "fill_bounds.hpp"
-#include "longest_common_prefix.hpp"
-#include "tester_class.hpp"
-#include "weird_date.hpp"
+#include "eksersajz/buy_sell_stock.hpp"
+#include "eksersajz/fill_bounds.hpp"
+#include "eksersajz/longest_common_prefix.hpp"
+#include "eksersajz/tester_class.hpp"
+#include "eksersajz/weird_date.hpp"
 
 int main(int argc, char **argv) {
   // std::vector<std::vector<int>> in = std::vector(6, std::vector<int>(7));

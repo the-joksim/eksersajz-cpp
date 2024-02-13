@@ -2,8 +2,10 @@
 #include <gtest/gtest.h>
 #include <map>
 
-#include "insert_delete_getrandom.hpp"
-#include "longest_common_prefix.hpp"
+#include "eksersajz/add_two_numbers.hpp"
+#include "eksersajz/insert_delete_getrandom.hpp"
+#include "eksersajz/longest_common_prefix.hpp"
+#include "eksersajz/product_of_array_except_self.hpp"
 
 TEST(Eksersajz, lcpNoCommonPrefix) {
   std::vector<std::string> words{"ark", "ball", "cluster", "dork"};
@@ -80,12 +82,31 @@ TEST(Eksersajz, getRandomAllValuesUniformlyDrawn) {
   RandomizedSet rs = make_random_rs(N, N);
 
   for (size_t i = 0; i < S; i++) {
-    int v = rs.get_random();
-    update_bins(bins, v);
+    update_bins(bins, rs.get_random());
   }
 
   // show_bins(bins);
   show_bins_statistics(bins);
+}
+
+TEST(Eksersajz, productExceptSelf) {
+  std::vector<int> nums{5, 7, 2, 4};
+  std::vector<int> expected{56, 40, 140, 70};
+  auto answer = product_except_self(nums);
+  ASSERT_EQ(answer, expected);
+}
+
+TEST(Eksersajz, addTwoNumbers) {
+  // ListNode *x = new ListNode(1, new ListNode(3));
+  // ListNode *y = new ListNode(9, new ListNode(6));
+  // ListNode *x = new ListNode(1);
+  ListNode *x =
+      new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
+  ListNode *y =
+      new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
+  // ListNode *y = new ListNode(9);
+
+  add_and_show(x, y);
 }
 
 int main(int argc, char **argv) {

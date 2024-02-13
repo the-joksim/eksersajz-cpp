@@ -100,13 +100,20 @@ TEST(Eksersajz, addTwoNumbers) {
   // ListNode *x = new ListNode(1, new ListNode(3));
   // ListNode *y = new ListNode(9, new ListNode(6));
   // ListNode *x = new ListNode(1);
-  ListNode *x =
-      new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
-  ListNode *y =
-      new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
+  // ListNode *x =
+  // new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
+  // ListNode *y =
+  // new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
   // ListNode *y = new ListNode(9);
+  auto *x = make_lnode_from({9, 9, 9});
+  auto *y = make_lnode_from({1});
 
   add_and_show(x, y);
+
+  // auto *u = make_lnode_from({5, 6, 6});
+  // auto *v = make_lnode_from({5, 3});
+
+  // add_and_show(u, v);
 }
 
 int main(int argc, char **argv) {

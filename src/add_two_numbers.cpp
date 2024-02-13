@@ -60,15 +60,19 @@ void traverse(ListNode *l, std::function<void(int)> f) {
 // digits - number in reverse order
 // fix
 ListNode *make_lnode_from(const std::vector<int> &digits) {
-  auto *head = new ListNode();
-  auto cur = head;
+  ListNode *prev = nullptr;
+  ListNode *head = nullptr;
+
   for (const auto d : digits) {
-    cur->val = d;
-    auto *next = new ListNode();
-    cur->next = next;
-    cur = cur->next;
+    auto *cur = new ListNode(d);
+    if (prev == nullptr) {
+      prev = cur;
+      head = prev;
+    } else [[likely]] {
+      prev->next = cur;
+      prev = cur;
+    }
   }
-  cur->next = nullptr;
 
   return head;
 }

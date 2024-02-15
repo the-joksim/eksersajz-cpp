@@ -5,6 +5,7 @@
 #include "eksersajz/add_two_numbers.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
 #include "eksersajz/longest_common_prefix.hpp"
+#include "eksersajz/merge_two_sorted_lists.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
 
 TEST(Eksersajz, lcpNoCommonPrefix) {
@@ -90,30 +91,53 @@ TEST(Eksersajz, getRandomAllValuesUniformlyDrawn) {
 }
 
 TEST(Eksersajz, productExceptSelf) {
-  std::vector<int> nums{5, 7, 2, 4};
-  std::vector<int> expected{56, 40, 140, 70};
-  auto answer = product_except_self(nums);
-  ASSERT_EQ(answer, expected);
+  {
+    std::vector<int> nums{5, 7, 2, 4};
+    std::vector<int> expected{56, 40, 140, 70};
+    auto answer = product_except_self(nums);
+    ASSERT_EQ(answer, expected);
+  }
+
+  {
+    std::vector<int> nums{1, 2, 3, 4, 5, 6};
+    std::vector<int> expected{720, 360, 240, 180, 144, 120};
+    auto answer = product_except_self(nums);
+    ASSERT_EQ(answer, expected);
+  }
 }
 
 TEST(Eksersajz, addTwoNumbers) {
-  // ListNode *x = new ListNode(1, new ListNode(3));
-  // ListNode *y = new ListNode(9, new ListNode(6));
-  // ListNode *x = new ListNode(1);
-  // ListNode *x =
-  // new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
-  // ListNode *y =
-  // new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
-  // ListNode *y = new ListNode(9);
-  auto *x = make_lnode_from({9, 9, 9});
-  auto *y = make_lnode_from({1});
+  {
+    auto *x = make_lnode_from({9, 9, 9});
+    auto *y = make_lnode_from({1});
 
-  add_and_show(x, y);
+    add_and_show(x, y);
+  }
 
-  // auto *u = make_lnode_from({5, 6, 6});
-  // auto *v = make_lnode_from({5, 3});
+  {
+    auto *u = make_lnode_from({5, 6, 6});
+    auto *v = make_lnode_from({5, 3});
 
-  // add_and_show(u, v);
+    add_and_show(u, v);
+  }
+}
+
+TEST(Eksersajz, mergeTwoSortedLists) {
+  {
+    auto *x = make_lnode_from({3, 4, 4, 4});
+    auto *y = make_lnode_from({1, 2, 2, 3, 5, 6, 7});
+    auto *merged = merge(x, y);
+    traverse(merged, [](const int x) { std::cout << x << " : "; });
+    std::cout << '\n';
+  }
+
+  {
+    auto *x = make_lnode_from({1, 4, 5, 8});
+    auto *y = make_lnode_from({2, 3, 6, 7, 9});
+    auto *merged = merge(x, y);
+    traverse(merged, [](const int x) { std::cout << x << " : "; });
+    std::cout << '\n';
+  }
 }
 
 int main(int argc, char **argv) {

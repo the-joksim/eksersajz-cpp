@@ -1,3 +1,5 @@
+#pragma once
+
 class Tester final {
 public:
   Tester();

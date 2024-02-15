@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 
 void print_table(const std::vector<std::vector<int>> &in);

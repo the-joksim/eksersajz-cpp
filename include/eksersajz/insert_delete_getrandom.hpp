@@ -12,6 +12,8 @@
 // that each function works in average
 // O(1) time complexity.
 
+#pragma once
+
 #include <random>
 #include <unordered_map>
 

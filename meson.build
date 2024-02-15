@@ -8,6 +8,7 @@ srcs = ['src/main.cpp',
         'src/buy_sell_stock.cpp',
         'src/longest_common_prefix.cpp',
         'src/insert_delete_getrandom.cpp',
+        'src/list_node.cpp',
         'src/add_two_numbers.cpp',
         'src/tester_class.cpp'
         ]
@@ -32,7 +33,9 @@ test_srcs = ['test/test_all.cpp',
              'src/longest_common_prefix.cpp',
              'src/insert_delete_getrandom.cpp',
              'src/product_of_array_except_self.cpp',
-             'src/add_two_numbers.cpp'
+             'src/list_node.cpp',
+             'src/add_two_numbers.cpp',
+             'src/merge_two_sorted_lists.cpp'
              ]
 
 test_exe = executable('test_all',

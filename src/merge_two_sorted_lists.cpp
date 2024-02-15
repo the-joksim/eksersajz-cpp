@@ -6,8 +6,14 @@ bool is_sorted(ListNode *x) { return true; }
 
 ListNode *merge(ListNode *x, ListNode *y) {
   // we insert the elems from y to x
-  assert(x != nullptr and y != nullptr);
-  assert(is_sorted(x) && is_sorted(y));
+  assert(x != nullptr or y != nullptr);
+
+  if (y == nullptr) {
+    return x;
+  }
+  if (x == nullptr) {
+    return y;
+  }
 
   ListNode *head = x;
   ListNode *x_prev = nullptr;

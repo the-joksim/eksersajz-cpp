@@ -38,7 +38,7 @@ int better(std::vector<int> &height) {
 
   while (l < r) {
     int area = std::min(height[l], height[r]) * (r - l);
-    area = std::max(max, area);
+    max = std::max(max, area);
 
     process_current(area, l, r);
 

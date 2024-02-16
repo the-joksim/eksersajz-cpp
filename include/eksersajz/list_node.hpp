@@ -16,3 +16,5 @@ struct ListNode {
 bool has_more_elems(ListNode *x);
 void traverse(ListNode *l, std::function<void(int)> f);
 ListNode *make_lnode_from(const std::vector<int> &digits);
+ListNode *make_random_list(size_t n, int max_val,
+                           std::function<bool(int, int)> relation);

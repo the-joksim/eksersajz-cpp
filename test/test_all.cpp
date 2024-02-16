@@ -3,10 +3,12 @@
 #include <map>
 
 #include "eksersajz/add_two_numbers.hpp"
+#include "eksersajz/container_with_most_water.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
 #include "eksersajz/longest_common_prefix.hpp"
 #include "eksersajz/merge_two_sorted_lists.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
+#include "eksersajz/utils.hpp"
 
 TEST(Eksersajz, lcpNoCommonPrefix) {
   std::vector<std::string> words{"ark", "ball", "cluster", "dork"};
@@ -137,6 +139,37 @@ TEST(Eksersajz, mergeTwoSortedLists) {
     auto *merged = merge(x, y);
     traverse(merged, [](const int x) { std::cout << x << " : "; });
     std::cout << '\n';
+  }
+
+  {
+    auto *x = make_random_list(10, 1000, [](int u, int v) { return u < v; });
+    std::cout << "x = ";
+    traverse(x, [](const int x) { std::cout << x << " : "; });
+    std::cout << '\n';
+
+    auto *y = make_random_list(15, 1000, [](int u, int v) { return u < v; });
+    std::cout << "y = ";
+    traverse(y, [](const int x) { std::cout << x << " : "; });
+    std::cout << '\n';
+
+    auto *merged = merge(x, y);
+    std::cout << "merged = ";
+    traverse(merged, [](const int x) { std::cout << x << " : "; });
+    std::cout << '\n';
+  }
+}
+
+TEST(Eksersajz, containerWithMostWater) {
+  {
+    std::vector<int> height{1, 8, 6, 2, 5, 4, 8, 3, 7};
+    int expected = 49;
+    ASSERT_EQ(max_area(height), expected);
+  }
+
+  {
+    std::vector<int> height{1, 4, 4, 1};
+    int expected = 4;
+    ASSERT_EQ(max_area(height), expected);
   }
 }
 

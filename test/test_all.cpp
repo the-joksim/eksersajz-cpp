@@ -4,7 +4,9 @@
 
 #include "eksersajz/add_two_numbers.hpp"
 #include "eksersajz/container_with_most_water.hpp"
+#include "eksersajz/first_missing_positive.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
+#include "eksersajz/insert_search_position.hpp"
 #include "eksersajz/longest_common_prefix.hpp"
 #include "eksersajz/merge_two_sorted_lists.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
@@ -170,6 +172,78 @@ TEST(Eksersajz, containerWithMostWater) {
     std::vector<int> height{1, 4, 4, 1};
     int expected = 4;
     ASSERT_EQ(max_area(height), expected);
+  }
+}
+
+TEST(Eksersajz, insertSearchPosition) {
+  {
+    std::cout << "Run: 1" << '\n';
+    std::vector<int> nums{1, 3, 5, 6};
+    int t = 5;
+    int expected = 2;
+    ASSERT_EQ(search_insert(nums, t), expected);
+  }
+
+  {
+    std::cout << "Run: 2" << '\n';
+    std::vector<int> nums{1, 3, 5, 6};
+    int t = 0;
+    int expected = 0;
+    ASSERT_EQ(search_insert(nums, t), expected);
+  }
+
+  {
+    std::cout << "Run: 3" << '\n';
+    std::vector<int> nums{1, 3, 5, 6};
+    int t = 7;
+    int expected = 4;
+    ASSERT_EQ(search_insert(nums, t), expected);
+  }
+
+  {
+    std::cout << "Run: 4" << '\n';
+    std::vector<int> nums{0, 25, 37, 39, 63, 74, 77, 81, 95, 105};
+    int t = 57;
+    int expected = 4;
+    ASSERT_EQ(search_insert(nums, t), expected);
+  }
+}
+
+TEST(Eksersajz, firstMissingPositive) {
+  {
+    std::vector<int> nums{7, 8, 9, 10, 11, 12};
+    int expected = 1;
+    ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{1, 2, 0};
+    int expected = 3;
+    ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{3, 4, -1, 1};
+    int expected = 2;
+    ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{3, 5, -1, 1, 2};
+    int expected = 4;
+    ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{3, 5, -1, 1, 2, -1, 7, 6, -1, 4, 9};
+    int expected = 8;
+    ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{1, 2, 6, 3, 5, 4};
+    int expected = 7;
+    ASSERT_EQ(first_missing_positive(nums), expected);
   }
 }
 

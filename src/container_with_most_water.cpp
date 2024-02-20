@@ -44,8 +44,7 @@ int better(std::vector<int> &height) {
 
     if (height[l] >= height[r]) {
       r--;
-    }
-    if (height[r] >= height[l]) {
+    } else {
       l++;
     }
   }

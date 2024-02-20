@@ -173,6 +173,11 @@ TEST(Eksersajz, containerWithMostWater) {
     int expected = 4;
     ASSERT_EQ(max_area(height), expected);
   }
+  {
+    std::vector<int> height{1, 8, 100, 2, 100, 4, 8, 3, 7};
+    int expected = 200;
+    ASSERT_EQ(max_area(height), expected);
+  }
 }
 
 TEST(Eksersajz, insertSearchPosition) {

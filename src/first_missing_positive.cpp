@@ -61,8 +61,8 @@ int first_missing_positive(std::vector<int> &nums) {
     if (s == g) {
       s++;
 
-      // i = g_i; // we don't set it to g_i because the for loop will do that
-      // for us (i++ before entering into another iteration)
+      // i = g_i; // we don't set it to g_i + 1 because the for loop will do
+      // that for us (i++ before entering into another iteration)
 
       // This makes the algorithm O(n^2) - we jump back to the beginning.
       // Can we choose a better index to backtrack to?

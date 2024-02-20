@@ -3,6 +3,7 @@
 #include <map>
 
 #include "eksersajz/add_two_numbers.hpp"
+#include "eksersajz/climbing_stairs.hpp"
 #include "eksersajz/container_with_most_water.hpp"
 #include "eksersajz/first_missing_positive.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
@@ -10,6 +11,7 @@
 #include "eksersajz/longest_common_prefix.hpp"
 #include "eksersajz/merge_two_sorted_lists.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
+#include "eksersajz/reverse_integer.hpp"
 #include "eksersajz/utils.hpp"
 
 TEST(Eksersajz, lcpNoCommonPrefix) {
@@ -249,6 +251,71 @@ TEST(Eksersajz, firstMissingPositive) {
     std::vector<int> nums{1, 2, 6, 3, 5, 4};
     int expected = 7;
     ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+                          10, 9,  8,  7,  6,  5,  4,  3,  2,  1};
+    int expected = 21;
+    ASSERT_EQ(first_missing_positive(nums), expected);
+  }
+}
+
+TEST(Eksersajz, reverseInteger) {
+  {
+    int n = 123;
+    int expected = 321;
+    ASSERT_EQ(reverse_integer(n), expected);
+  }
+
+  {
+    int n = 120;
+    int expected = 21;
+    ASSERT_EQ(reverse_integer(n), expected);
+  }
+
+  {
+    int n = -4567;
+    int expected = -7654;
+    ASSERT_EQ(reverse_integer(n), expected);
+  }
+
+  {
+    int n = INT_MAX;
+    int expected = 0;
+    ASSERT_EQ(reverse_integer(n), expected);
+  }
+
+  {
+    int n = INT_MIN;
+    int expected = 0;
+    ASSERT_EQ(reverse_integer(n), expected);
+  }
+}
+
+TEST(Eksersajz, climbingStairs) {
+  {
+    int n = 2;
+    int expected = 2;
+    ASSERT_EQ(climb_stairs(n), expected);
+  }
+
+  {
+    int n = 3;
+    int expected = 3;
+    ASSERT_EQ(climb_stairs(n), expected);
+  }
+
+  {
+    int n = 4;
+    int expected = 5;
+    ASSERT_EQ(climb_stairs(n), expected);
+  }
+
+  {
+    int n = 5;
+    int expected = 8;
+    ASSERT_EQ(climb_stairs(n), expected);
   }
 }
 

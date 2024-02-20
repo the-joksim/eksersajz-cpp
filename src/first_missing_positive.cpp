@@ -31,7 +31,7 @@
 #include <climits>
 #include <iostream>
 
-int first_missing_positive(std::vector<int> &nums) {
+int my_failed_attempt(std::vector<int> &nums) {
   int s = 1; // smallest missing positive candidate
   int g = INT_MAX;
   int g_i = -1; // index of the number closest to our candidate u (used for
@@ -56,8 +56,8 @@ int first_missing_positive(std::vector<int> &nums) {
     }
 
     // A gap is closed if the smallest missing candidate becomes equal to the
-    // gap candidate g if we find a number closer to s than the closest known so
-    // far. We backtrack from the position of the last found gap element + 1
+    // gap candidate g. We backtrack from the position of the last found gap
+    // element + 1.
     if (s == g) {
       s++;
 
@@ -81,3 +81,75 @@ int first_missing_positive(std::vector<int> &nums) {
             << "iterations: " << iterations << '\n';
   return s;
 }
+
+int official(std::vector<int> &nums) {
+  // The solution is based on two tricks/observations:
+  // 1.) For an array of n numbers, the first missing positive integer is <=
+  //     n+1.
+  //     The equality will hold only if the array has the first n positive
+  //     integers as elements, e.g. nums = [1, 2, 3, 4, 5, 6] (they could be in
+  //     any order).
+  // 2.) As we're constrained by O(1) in space, we have to use the original
+  //     integer array.
+  //     We use it as follows:
+  //      We first do a sweep to check if 1 is found in the array. If not, then
+  //      1 is the smallest missing positive integer.
+  //      Otherwise, we preprocess the array so that for nums[i] < 0 or nums[i]
+  //      > n (?), we replace nums[i] with 1, so when we encounter them
+  //      (remember that at this point we know 1 was found in the array), we
+  //      don't care about them.
+  //      For a given nums[i], , we set nums[nums[i]] to -1 indicating that
+  //      nums[i] is present.
+  //      Finally, we scan the array once more, searching for the first position
+  //      i where we find a positive number. i is then the smallest missing
+  //      positive integer.
+
+  int n = nums.size();
+
+  // Base case.
+  int contains = 0;
+  for (int i = 0; i < n; i++)
+    if (nums[i] == 1) {
+      contains++;
+      break;
+    }
+
+  if (contains == 0)
+    return 1;
+
+  // Replace negative numbers, zeros,
+  // and numbers larger than n by 1s.
+  // After this convertion nums will contain
+  // only positive numbers.
+  for (int i = 0; i < n; i++)
+    if ((nums[i] <= 0) or (nums[i] > n))
+      nums[i] = 1;
+
+  // Use index as a hash key and number sign as a presence detector.
+  // For example, if nums[1] is negative that means that number `1`
+  // is present in the array.
+  // If nums[2] is positive - number 2 is missing.
+  for (int i = 0; i < n; i++) {
+    int a = std::abs(nums[i]);
+    // If you meet number a in the array - change the sign of a-th element.
+    // Be careful with duplicates : do it only once.
+    if (a == n)
+      nums[0] = -std::abs(nums[0]);
+    else
+      nums[a] = -std::abs(nums[a]);
+  }
+
+  // Now the index of the first positive number
+  // is equal to first missing positive.
+  for (int i = 1; i < n; i++) {
+    if (nums[i] > 0)
+      return i;
+  }
+
+  if (nums[0] > 0)
+    return n;
+
+  return n + 1;
+}
+
+int first_missing_positive(std::vector<int> &nums) { return official(nums); }

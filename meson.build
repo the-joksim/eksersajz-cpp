@@ -14,7 +14,9 @@ srcs = ['src/main.cpp',
         'src/add_two_numbers.cpp',
         'src/container_with_most_water.cpp',
         'src/insert_search_position.cpp',
-        'src/first_missing_positive.cpp'
+        'src/first_missing_positive.cpp',
+        'src/reverse_integer.cpp',
+        'src/climbing_stairs.cpp'
         ]
 incdirs = ['include']
 
@@ -43,7 +45,9 @@ test_srcs = ['test/test_all.cpp',
              'src/merge_two_sorted_lists.cpp',
              'src/container_with_most_water.cpp',
              'src/insert_search_position.cpp',
-             'src/first_missing_positive.cpp'
+             'src/first_missing_positive.cpp',
+             'src/reverse_integer.cpp',
+             'src/climbing_stairs.cpp'
              ]
 
 test_exe = executable('test_all',

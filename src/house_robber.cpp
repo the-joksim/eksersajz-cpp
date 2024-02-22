@@ -28,7 +28,10 @@
 // 0 <= nums[i] <= 400
 
 #include "eksersajz/house_robber.hpp"
+#include <cassert>
+#include <iostream>
 
+// exceeds time limit on lc
 int go(int loot, int i, const std::vector<int> &houses) {
   if (i > (houses.size() - 1))
     return loot;
@@ -39,7 +42,26 @@ int go(int loot, int i, const std::vector<int> &houses) {
                   go(loot + houses[i], i + 3, houses));
 }
 
+int go_faster(int i, const std::vector<int> &houses, std::vector<int> &table) {
+  int n = houses.size();
+  if (i > (n - 1))
+    return 0;
+  if (i == (n - 1))
+    return houses[n - 1];
+
+  if (table[i] != -1) {
+    return table[i];
+  } else {
+    int r = houses[i] + std::max(go_faster(i + 2, houses, table),
+                                 go_faster(i + 3, houses, table));
+    table[i] = r;
+  }
+
+  return table[i];
+}
+
 int rob(std::vector<int> &nums) {
+  std::vector<int> table(nums.size(), -1);
   // we can start robbing from index 0 or 1
-  return std::max(go(0, 0, nums), go(0, 1, nums));
+  return std::max(go_faster(0, nums, table), go_faster(1, nums, table));
 }

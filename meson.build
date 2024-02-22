@@ -16,7 +16,8 @@ srcs = ['src/main.cpp',
         'src/insert_search_position.cpp',
         'src/first_missing_positive.cpp',
         'src/reverse_integer.cpp',
-        'src/climbing_stairs.cpp'
+        'src/climbing_stairs.cpp',
+        'src/house_robber.cpp'
         ]
 incdirs = ['include']
 
@@ -47,7 +48,8 @@ test_srcs = ['test/test_all.cpp',
              'src/insert_search_position.cpp',
              'src/first_missing_positive.cpp',
              'src/reverse_integer.cpp',
-             'src/climbing_stairs.cpp'
+             'src/climbing_stairs.cpp',
+             'src/house_robber.cpp'
              ]
 
 test_exe = executable('test_all',

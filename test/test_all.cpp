@@ -6,6 +6,7 @@
 #include "eksersajz/climbing_stairs.hpp"
 #include "eksersajz/container_with_most_water.hpp"
 #include "eksersajz/first_missing_positive.hpp"
+#include "eksersajz/house_robber.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
 #include "eksersajz/insert_search_position.hpp"
 #include "eksersajz/longest_common_prefix.hpp"
@@ -316,6 +317,32 @@ TEST(Eksersajz, climbingStairs) {
     int n = 5;
     int expected = 8;
     ASSERT_EQ(climb_stairs(n), expected);
+  }
+}
+
+TEST(Eksersajz, houseRobber) {
+  {
+    std::vector<int> nums{1, 2, 3, 1};
+    int expected = 4;
+    ASSERT_EQ(rob(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{2, 7, 3, 1};
+    int expected = 8;
+    ASSERT_EQ(rob(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{2, 7, 9, 3, 1};
+    int expected = 12;
+    ASSERT_EQ(rob(nums), expected);
+  }
+
+  {
+    std::vector<int> nums{1, 2, 3, 2, 1, 5};
+    int expected = 9;
+    ASSERT_EQ(rob(nums), expected);
   }
 }
 

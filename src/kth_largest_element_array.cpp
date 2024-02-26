@@ -27,12 +27,15 @@ int find_kth_largest(std::vector<int> &nums, int k) {
     //  first two elements are the children of the removed max
     //  * we could end up in the situation where the new first element is
     //  smaller than the second one, and if this is the case, we swap them,
-    // and are left with a proper max heap
-    if (nums.size() > 1) {
-      if (nums[0] < nums[1]) {
-        std::swap(nums[0], nums[1]);
-      }
-    }
+    // and are left with a proper max heap (check this - sounds whack)
+    // CHECKED - make_heap builds a different heap than I'd expect - it sorts
+    // the input array in reverse HENCE, no swapping is necessary
+
+    // if (nums.size() > 1) {
+    // if (nums[0] < nums[1]) {
+    // std::swap(nums[0], nums[1]);
+    //}
+    //}
 
     t++;
   }

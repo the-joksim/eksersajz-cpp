@@ -399,6 +399,20 @@ TEST(Eksersajz, kthLargestInArray) {
     int expected = 4;
     ASSERT_EQ(find_kth_largest(nums, k), expected);
   }
+
+  {
+    std::vector<int> nums{1, 2, 3, 4, 6};
+    int k = 4;
+    int expected = 2;
+    ASSERT_EQ(find_kth_largest(nums, k), expected);
+  }
+
+  {
+    std::vector<int> nums{11, 26, 7, 14, 22, 71};
+    int k = 3;
+    int expected = 22;
+    ASSERT_EQ(find_kth_largest(nums, k), expected);
+  }
 }
 
 int main(int argc, char **argv) {

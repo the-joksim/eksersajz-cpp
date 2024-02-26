@@ -4,11 +4,13 @@
 
 #include "eksersajz/add_two_numbers.hpp"
 #include "eksersajz/climbing_stairs.hpp"
+#include "eksersajz/coin_change.hpp"
 #include "eksersajz/container_with_most_water.hpp"
 #include "eksersajz/first_missing_positive.hpp"
 #include "eksersajz/house_robber.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
 #include "eksersajz/insert_search_position.hpp"
+#include "eksersajz/kth_largest_element_array.hpp"
 #include "eksersajz/longest_common_prefix.hpp"
 #include "eksersajz/merge_two_sorted_lists.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
@@ -343,6 +345,59 @@ TEST(Eksersajz, houseRobber) {
     std::vector<int> nums{1, 2, 3, 2, 1, 5};
     int expected = 9;
     ASSERT_EQ(rob(nums), expected);
+  }
+}
+
+TEST(Eksersajz, coinChange) {
+  {
+    std::vector<int> coins{1, 2, 3};
+    int amount = 6;
+    int expected = 2;
+    ASSERT_EQ(coin_change(coins, amount), expected);
+  }
+
+  {
+    std::vector<int> coins{1, 2, 3};
+    int amount = 4;
+    int expected = 2;
+    ASSERT_EQ(coin_change(coins, amount), expected);
+  }
+
+  {
+    std::vector<int> coins{1, 2, 3};
+    int amount = 7;
+    int expected = 3;
+    ASSERT_EQ(coin_change(coins, amount), expected);
+  }
+
+  {
+    std::vector<int> coins{25, 10, 1};
+    int amount = 30;
+    int expected = 3;
+    ASSERT_EQ(coin_change(coins, amount), expected);
+  }
+}
+
+TEST(Eksersajz, kthLargestInArray) {
+  {
+    std::vector<int> nums{0, 1, 2, 3};
+    int k = nums.size();
+    int expected = 0;
+    ASSERT_EQ(find_kth_largest(nums, k), expected);
+  }
+
+  {
+    std::vector<int> nums{3, 2, 1, 5, 6, 4};
+    int k = 2;
+    int expected = 5;
+    ASSERT_EQ(find_kth_largest(nums, k), expected);
+  }
+
+  {
+    std::vector<int> nums{3, 2, 3, 1, 2, 4, 5, 5, 6};
+    int k = 4;
+    int expected = 4;
+    ASSERT_EQ(find_kth_largest(nums, k), expected);
   }
 }
 

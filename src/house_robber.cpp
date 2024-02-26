@@ -49,6 +49,7 @@ int go_faster(int i, const std::vector<int> &houses, std::vector<int> &table) {
   if (i == (n - 1))
     return houses[n - 1];
 
+  // -1 means "not computed yet"
   if (table[i] != -1) {
     return table[i];
   } else {

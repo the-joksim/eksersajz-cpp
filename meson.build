@@ -1,5 +1,5 @@
 project('eksersajz', 'cpp',
-        default_options: ['cpp_std=c++20'])
+        default_options: ['cpp_std=c++2b'])
 
 
 srcs = ['src/main.cpp',
@@ -19,24 +19,21 @@ srcs = ['src/main.cpp',
         'src/climbing_stairs.cpp',
         'src/house_robber.cpp',
         'src/coin_change.cpp',
-        'src/kth_largest_element_array.cpp'
+        'src/kth_largest_element_array.cpp',
+        'src/lowest_common_ancestor.cpp',
+        'src/k_smallest_pairs.cpp'
         ]
+
 incdirs = ['include']
+
+#spdlog dep
+spdlog_proj = subproject('spdlog')
+spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
 
 executable('prog',
            sources: srcs,
-           include_directories: incdirs)
-
-
-gtest_proj = subproject('gtest')
-
-gtest_dep = gtest_proj.get_variable('gtest_main_dep') 
-gmock_dep = gtest_proj.get_variable('gmock_dep') 
-gtest_dep = dependency('gtest', main : true, required : false) 
-gmock_dep = dependency('gmock', main : true, required : false) 
-
-gtest_lib = static_library('gtest', install : true)
-gmock_lib = static_library('gmock', install: true) 
+           include_directories: incdirs,
+           dependencies: [spdlog_dep])
 
 test_srcs = ['test/test_all.cpp',
              'src/utils.cpp',
@@ -53,13 +50,27 @@ test_srcs = ['test/test_all.cpp',
              'src/climbing_stairs.cpp',
              'src/house_robber.cpp',
              'src/coin_change.cpp',
-             'src/kth_largest_element_array.cpp'
+             'src/kth_largest_element_array.cpp',
+             'src/lowest_common_ancestor.cpp',
+             'src/k_smallest_pairs.cpp'
              ]
+
+# gtest dep
+gtest_proj = subproject('gtest')
+
+gtest_dep = gtest_proj.get_variable('gtest_main_dep') 
+gmock_dep = gtest_proj.get_variable('gmock_dep') 
+gtest_dep = dependency('gtest', main : true, required : false) 
+gmock_dep = dependency('gmock', main : true, required : false) 
+
+gtest_lib = static_library('gtest', install : true)
+gmock_lib = static_library('gmock', install: true) 
+
 
 test_exe = executable('test_all',
                       sources: test_srcs,
                       include_directories: incdirs,
-                      dependencies: [gtest_dep, gmock_dep],
+                      dependencies: [gtest_dep, gmock_dep, spdlog_dep],
                       link_with: [gtest_lib, gmock_lib])
 
 test('all_tests', test_exe)

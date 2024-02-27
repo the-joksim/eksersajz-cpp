@@ -10,8 +10,10 @@
 #include "eksersajz/house_robber.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
 #include "eksersajz/insert_search_position.hpp"
+#include "eksersajz/k_smallest_pairs.hpp"
 #include "eksersajz/kth_largest_element_array.hpp"
 #include "eksersajz/longest_common_prefix.hpp"
+#include "eksersajz/lowest_common_ancestor.hpp"
 #include "eksersajz/merge_two_sorted_lists.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
 #include "eksersajz/reverse_integer.hpp"
@@ -412,6 +414,62 @@ TEST(Eksersajz, kthLargestInArray) {
     int k = 3;
     int expected = 22;
     ASSERT_EQ(find_kth_largest(nums, k), expected);
+  }
+}
+
+TEST(Eksersajz, k_smallest_pairs) {
+  {
+    std::vector<int> n1{1};
+    std::vector<int> n2{1};
+
+    std::vector<std::vector<int>> expected{{1, 1}};
+    ASSERT_EQ(k_smallest_pairs(n1, n2, 1), expected);
+  }
+}
+
+TEST(Eksersajz, lowestCommonAncestor) {
+  {
+    TreeNode *root = new TreeNode(6);
+
+    TreeNode *expected = root;
+
+    ASSERT_EQ(lowest_common_ancestor(root, root, root), expected);
+  }
+
+  {
+    TreeNode *root = new TreeNode(6);
+    TreeNode *l = new TreeNode(7);
+    TreeNode *r = new TreeNode(8);
+    root->left = l;
+    root->right = r;
+
+    TreeNode *expected = root;
+
+    ASSERT_EQ(lowest_common_ancestor(root, l, r), expected);
+  }
+
+  {
+    TreeNode *root = new TreeNode(6);
+    TreeNode *l = new TreeNode(7);
+    root->left = l;
+
+    TreeNode *expected = root;
+
+    ASSERT_EQ(lowest_common_ancestor(root, l, root), expected);
+  }
+
+  {
+    TreeNode *root = new TreeNode(4);
+
+    TreeNode *l = new TreeNode(7);
+    root->left = l;
+
+    TreeNode *q = new TreeNode(14);
+    TreeNode *p = new TreeNode(11, q, nullptr);
+    root->right = p;
+
+    TreeNode *expected = p;
+    ASSERT_EQ(lowest_common_ancestor(root, p, q), expected);
   }
 }
 

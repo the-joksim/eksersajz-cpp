@@ -31,21 +31,82 @@
 #include "eksersajz/k_smallest_pairs.hpp"
 #include "eksersajz/utils.hpp"
 
+#include <climits>
 #include <format>
+#include <iostream>
 #include <optional>
 
-#include "spdlog/sinks/basic_file_sink.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/spdlog.h"
+namespace {
 
-std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &nums1,
-                                               std::vector<int> &nums2, int k) {
+void print_pairs(const std::vector<std::vector<int>> &pairs) {
+  std::for_each(pairs.begin(), pairs.end(), [](const std::vector<int> p) {
+    std::cout << std::format("{{{}, {}}}", p[0], p[1]) << '\n';
+  });
+}
 
-  auto maybe_logger = my_utils::logging::mk_basic_logger(
-      __func__, std::string("logs/") + __func__ + ".txt");
+struct pair_ptr {
+  int from = 0;
+  int to = 0;
+};
 
-  my_utils::logging::log_stuff(my_utils::logging::LogLevel::info, maybe_logger,
-                               "this is kinda funky!");
+} // namespace
 
-  return {};
+// FIXME:
+//  - still fucked - the case s_x == s_y is probably not handled correctly
+std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &x,
+                                               std::vector<int> &y, int k) {
+  int n_x = static_cast<int>(x.size());
+  int n_y = static_cast<int>(y.size());
+
+  if (n_x == 0 or n_y == 0) {
+    return {};
+  }
+
+  std::vector<std::vector<int>> sp{};
+  sp.push_back({x[0], y[0]}); // minimum
+  int n = 1;
+
+  pair_ptr x_to_y{.from = 0, .to = 1};
+  pair_ptr y_to_x{.from = 0, .to = 1};
+
+  while (n < k) {
+    int s_x = x[x_to_y.from] + y[x_to_y.to];
+    int s_y = y[y_to_x.from] + x[y_to_x.to];
+
+    if (s_x < s_y) {
+      sp.push_back({x[x_to_y.from], y[x_to_y.to]});
+      n++;
+      if (x_to_y.to == (n_y - 1)) {
+        if (x_to_y.from == (n_x - 1)) {
+          break; // we've reached the final pair: x[x.size - 1], y[y.size - 1]
+        } else {
+          x_to_y.from++;
+          if (y_to_x.from < (n_y - 1)) {
+            x_to_y.to = y_to_x.from + 1;
+          }
+        }
+      } else {
+        x_to_y.to++;
+      }
+    }
+
+    if (s_y <= s_x) {
+      sp.push_back({x[y_to_x.to], y[y_to_x.from]});
+      n++;
+      if (y_to_x.to == (n_x - 1)) {
+        if (y_to_x.from == (n_y - 1)) {
+          break;
+        } else {
+          y_to_x.from++;
+          if (x_to_y.from < (n_x - 1)) {
+            y_to_x.to = x_to_y.from + 1;
+          }
+        }
+      } else {
+        y_to_x.to++;
+      }
+    }
+  }
+
+  return sp;
 }

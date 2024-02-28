@@ -2,5 +2,5 @@
 
 #include <vector>
 
-std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &nums1,
-                                               std::vector<int> &nums2, int k);
+std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &x,
+                                               std::vector<int> &y, int k);

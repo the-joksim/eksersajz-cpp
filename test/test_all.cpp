@@ -419,11 +419,24 @@ TEST(Eksersajz, kthLargestInArray) {
 
 TEST(Eksersajz, k_smallest_pairs) {
   {
-    std::vector<int> n1{1};
-    std::vector<int> n2{1};
+    std::vector<int> n1{1, 5, 7, 11};
+    std::vector<int> n2{2, 3, 4, 6};
+    int k = 16;
 
-    std::vector<std::vector<int>> expected{{1, 1}};
-    ASSERT_EQ(k_smallest_pairs(n1, n2, 1), expected);
+    std::vector<std::vector<int>> expected{{1, 2}, {1, 4}, {1, 6}, {7, 2}};
+
+    ASSERT_EQ(k_smallest_pairs(n1, n2, k), expected);
+  }
+
+  {
+    std::vector<int> n1{1, 1, 2};
+    std::vector<int> n2{1, 2, 3};
+    int k = 9;
+
+    std::vector<std::vector<int>> expected{
+        {1, 1}, {1, 1}, {1, 2}, {2, 1}, {1, 2}, {2, 2}, {1, 3}, {1, 3}, {2, 3}};
+
+    ASSERT_EQ(k_smallest_pairs(n1, n2, k), expected);
   }
 }
 

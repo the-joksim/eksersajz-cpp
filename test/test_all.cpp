@@ -419,9 +419,9 @@ TEST(Eksersajz, kthLargestInArray) {
 
 TEST(Eksersajz, k_smallest_pairs) {
   {
-    std::vector<int> n1{1, 5, 7, 11};
-    std::vector<int> n2{2, 3, 4, 6};
-    int k = 16;
+    std::vector<int> n1{1, 7, 11};
+    std::vector<int> n2{2, 4, 6};
+    int k = 4;
 
     std::vector<std::vector<int>> expected{{1, 2}, {1, 4}, {1, 6}, {7, 2}};
 

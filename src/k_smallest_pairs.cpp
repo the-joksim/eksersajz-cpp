@@ -46,9 +46,9 @@ void print_pairs(const std::vector<std::vector<int>> &pairs) {
 }
 
 struct pair {
-  int x = 0;
-  int y = 0;
-  int sum = 0;
+  int x = 0;   // index in the first array
+  int y = 0;   // index in the second array
+  int sum = 0; // sum of elements at the above indices
 };
 
 struct pair_gt {
@@ -60,7 +60,7 @@ using min_heap = std::priority_queue<pair, std::vector<pair>, pair_gt>;
 } // namespace
 
 // FIXME:
-//  - still fucked - the case s_x == s_y is probably not handled correctly
+//  - still fucked
 std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &x,
                                                std::vector<int> &y, int k) {
   int n_x = static_cast<int>(x.size());
@@ -70,52 +70,59 @@ std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &x,
     return {};
   }
 
-  // min_heap h;
+  min_heap h{};
 
   std::vector<std::vector<int>> sp{};
   sp.push_back({x[0], y[0]}); // minimum
-  int n = 1;
 
   pair x_y{.x = 0, .y = 1};
   pair y_x{.x = 1, .y = 0};
 
-  while (n < k) {
+  while (h.size() < (k + 1)) {
     int s_x = x[x_y.x] + y[x_y.y];
     int s_y = x[y_x.x] + y[y_x.y];
 
-    if (s_x <= s_y) {
-      sp.push_back({x[x_y.x], y[x_y.y]});
-      n++;
-      if (x_y.y == (n_y - 1)) {
-        if (x_y.x == (n_x - 1)) {
-          break; // we've reached the final pair: x[x.size - 1], y[y.size - 1]
-        } else {
-          x_y.x++;
-          if (y_x.y < (n_y - 1)) {
-            x_y.y = y_x.y + 1;
-          }
-        }
+    h.push(pair{.x = x_y.x, .y = x_y.y, .sum = s_x});
+    h.push(pair{.x = y_x.x, .y = y_x.y, .sum = s_y});
+
+    // move on to next pair y -> x (e.g. (1, 1) -> (2, 1))
+    // y is fixed, x moves until it hits the last element
+    // note that we avoid duplicates (see the 'else' branch in the inner 'if')
+    if (y_x.x == (n_x - 1)) {
+      if (y_x.y == (n_y - 1)) {
+        break; // we've reached the final pair: x[x.size - 1], y[y.size - 1]
       } else {
-        x_y.y++;
+        y_x.y++;
+        if (x_y.x < (n_x - 1)) {
+          y_x.x = x_y.x + 1;
+        }
       }
+    } else {
+      y_x.x++;
     }
 
-    if (s_y < s_x) {
-      sp.push_back({x[y_x.x], y[y_x.y]});
-      n++;
-      if (y_x.x == (n_x - 1)) {
-        if (y_x.y == (n_y - 1)) {
-          break;
-        } else {
-          y_x.y++;
-          if (x_y.x < (n_x - 1)) {
-            y_x.x = x_y.x + 1;
-          }
-        }
+    // move on to next pair x -> y (e.g. (1, 1) -> (1, 2))
+    // x is fixed, y moves until it hits the last element
+    if (x_y.y == (n_y - 1)) {
+      if (x_y.x == (n_x - 1)) {
+        break; // we've reached the final pair: x[x.size - 1], y[y.size - 1]
       } else {
-        y_x.x++;
+        x_y.x++;
+        if (y_x.y < (n_y - 1)) {
+          x_y.y = y_x.y + 1;
+        }
       }
+    } else {
+      x_y.y++;
     }
+  }
+
+  while (k > 1) {
+    auto p = h.top();
+    sp.push_back({x[p.x], y[p.y]});
+
+    h.pop();
+    k--;
   }
 
   return sp;

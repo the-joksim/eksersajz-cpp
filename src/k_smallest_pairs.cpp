@@ -35,6 +35,7 @@
 #include <format>
 #include <iostream>
 #include <optional>
+#include <queue>
 
 namespace {
 
@@ -44,10 +45,17 @@ void print_pairs(const std::vector<std::vector<int>> &pairs) {
   });
 }
 
-struct pair_ptr {
-  int from = 0;
-  int to = 0;
+struct pair {
+  int x = 0;
+  int y = 0;
+  int sum = 0;
 };
+
+struct pair_gt {
+  bool operator()(const pair &x, const pair &y) { return x.sum > y.sum; }
+};
+
+using min_heap = std::priority_queue<pair, std::vector<pair>, pair_gt>;
 
 } // namespace
 
@@ -62,48 +70,50 @@ std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &x,
     return {};
   }
 
+  // min_heap h;
+
   std::vector<std::vector<int>> sp{};
   sp.push_back({x[0], y[0]}); // minimum
   int n = 1;
 
-  pair_ptr x_to_y{.from = 0, .to = 1};
-  pair_ptr y_to_x{.from = 0, .to = 1};
+  pair x_y{.x = 0, .y = 1};
+  pair y_x{.x = 1, .y = 0};
 
   while (n < k) {
-    int s_x = x[x_to_y.from] + y[x_to_y.to];
-    int s_y = y[y_to_x.from] + x[y_to_x.to];
+    int s_x = x[x_y.x] + y[x_y.y];
+    int s_y = x[y_x.x] + y[y_x.y];
 
-    if (s_x < s_y) {
-      sp.push_back({x[x_to_y.from], y[x_to_y.to]});
+    if (s_x <= s_y) {
+      sp.push_back({x[x_y.x], y[x_y.y]});
       n++;
-      if (x_to_y.to == (n_y - 1)) {
-        if (x_to_y.from == (n_x - 1)) {
+      if (x_y.y == (n_y - 1)) {
+        if (x_y.x == (n_x - 1)) {
           break; // we've reached the final pair: x[x.size - 1], y[y.size - 1]
         } else {
-          x_to_y.from++;
-          if (y_to_x.from < (n_y - 1)) {
-            x_to_y.to = y_to_x.from + 1;
+          x_y.x++;
+          if (y_x.y < (n_y - 1)) {
+            x_y.y = y_x.y + 1;
           }
         }
       } else {
-        x_to_y.to++;
+        x_y.y++;
       }
     }
 
-    if (s_y <= s_x) {
-      sp.push_back({x[y_to_x.to], y[y_to_x.from]});
+    if (s_y < s_x) {
+      sp.push_back({x[y_x.x], y[y_x.y]});
       n++;
-      if (y_to_x.to == (n_x - 1)) {
-        if (y_to_x.from == (n_y - 1)) {
+      if (y_x.x == (n_x - 1)) {
+        if (y_x.y == (n_y - 1)) {
           break;
         } else {
-          y_to_x.from++;
-          if (x_to_y.from < (n_x - 1)) {
-            y_to_x.to = x_to_y.from + 1;
+          y_x.y++;
+          if (x_y.x < (n_x - 1)) {
+            y_x.x = x_y.x + 1;
           }
         }
       } else {
-        y_to_x.to++;
+        y_x.x++;
       }
     }
   }

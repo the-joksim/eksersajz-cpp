@@ -1,5 +1,5 @@
 project('eksersajz', 'cpp',
-        default_options: ['cpp_std=c++2b'])
+        default_options: ['cpp_std=c++20'])
 
 
 srcs = ['src/main.cpp',
@@ -21,7 +21,9 @@ srcs = ['src/main.cpp',
         'src/coin_change.cpp',
         'src/kth_largest_element_array.cpp',
         'src/lowest_common_ancestor.cpp',
-        'src/k_smallest_pairs.cpp'
+        'src/k_smallest_pairs.cpp',
+        'src/lru_cache.cpp',
+        'src/bin_tree_from_preorder_inorder.cpp'
         ]
 
 incdirs = ['include']
@@ -52,7 +54,9 @@ test_srcs = ['test/test_all.cpp',
              'src/coin_change.cpp',
              'src/kth_largest_element_array.cpp',
              'src/lowest_common_ancestor.cpp',
-             'src/k_smallest_pairs.cpp'
+             'src/k_smallest_pairs.cpp',
+             'src/lru_cache.cpp',
+             'src/bin_tree_from_preorder_inorder.cpp'
              ]
 
 # gtest dep

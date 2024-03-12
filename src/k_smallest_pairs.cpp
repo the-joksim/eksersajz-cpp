@@ -79,6 +79,9 @@ std::vector<std::vector<int>> k_smallest_pairs(std::vector<int> &x,
   pair y_x{.x = 1, .y = 0};
 
   while (h.size() < (k + 1)) {
+    // h.size < k + 1 because we need k + 1 smallest pairs to be sure that we
+    // get k smalles pairs (leftover pair from a previous comparison that
+    // "lost")
     int s_x = x[x_y.x] + y[x_y.y];
     int s_y = x[y_x.x] + y[y_x.y];
 

@@ -6,9 +6,7 @@
 #include <format>
 #include <optional>
 
-#include "spdlog/sinks/basic_file_sink.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/spdlog.h"
+#include "spdlog/logger.h"
 
 std::vector<int> make_random_vec(int size, int max_val);
 
@@ -21,6 +19,8 @@ struct TreeNode {
   TreeNode(int x, TreeNode *l, TreeNode *r);
 };
 
+bool equal(const TreeNode *x, const TreeNode *y);
+
 namespace my_utils {
 
 namespace logging {
@@ -31,8 +31,11 @@ enum class LogLevel : std::uint8_t { debug, trace, info, warn, err };
 
 std::optional<Logger> mk_basic_logger(const std::string &name,
                                       const std::string &log_file);
-void log_stuff(LogLevel level, std::optional<Logger> logger,
-               const std::string &msg);
+
+std::optional<Logger> mk_stderr_logger(const std::string &name);
+
+void log_stuff(std::optional<Logger> logger, const std::string &msg,
+               LogLevel level = LogLevel::info);
 
 } // namespace logging
 

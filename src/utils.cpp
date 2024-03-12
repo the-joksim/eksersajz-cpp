@@ -1,5 +1,9 @@
 #include "eksersajz/utils.hpp"
 
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/spdlog.h"
+
 #include <random>
 
 std::vector<int> make_random_vec(int size, int max_val) {
@@ -19,6 +23,17 @@ TreeNode::TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 TreeNode::TreeNode(int x, TreeNode *l, TreeNode *r)
     : val(x), left(l), right(r) {}
 
+// FIXME:
+//  - make an iterative version
+bool equal(const TreeNode *x, const TreeNode *y) {
+  if (x == nullptr && y == nullptr) {
+    return true;
+  }
+
+  return x->val == y->val && equal(x->left, y->left) &&
+         equal(x->right, y->right);
+}
+
 namespace my_utils {
 
 namespace logging {
@@ -33,12 +48,26 @@ std::optional<Logger> mk_basic_logger(const std::string &name,
   }
 }
 
-void log_stuff(LogLevel level, std::optional<Logger> logger,
-               const std::string &msg) {
+std::optional<Logger> mk_stderr_logger(const std::string &name) {
+  Logger logger;
+  try {
+    logger = spdlog::stderr_color_mt(name);
+    return logger;
+  } catch (std::exception &e) {
+    return std::nullopt;
+  }
+}
+
+void log_stuff(std::optional<Logger> logger, const std::string &msg,
+               LogLevel level) {
   if (!logger.has_value()) {
     // default - log to stdout
-    logger = spdlog::stdout_color_mt("default");
+    logger = spdlog::get("default");
+    if (logger == nullptr) {
+      logger = spdlog::stdout_color_mt("default");
+    }
   }
+
   switch (level) {
   case LogLevel::debug:
     (*logger)->debug(msg);

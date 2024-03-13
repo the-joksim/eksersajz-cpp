@@ -47,16 +47,18 @@ bool is_unique(const std::vector<int> &xs) {
   return uniq;
 }
 
-std::tuple<std::vector<int>, std::vector<int>>
-split_inorder_on_root(const std::vector<int> &xs, int root) {
-  std::vector<int> l{};
-  std::vector<int> r{};
+// FIXME:
+//  - replace const std::vector<int> with std::span<int>
 
-  for (auto it = xs.begin(); it != xs.end(); it++) {
+std::tuple<std::span<int>, std::span<int>>
+split_inorder_on_root(const std::span<int> inorder, int root) {
+  std::span<int> l{};
+  std::span<int> r{};
+
+  for (auto it = inorder.begin(); it != inorder.end(); it++) {
     if (*it == root) {
-      l.insert(l.end(), xs.begin(), it);
-      r.insert(r.end(), it + 1,
-               xs.end()); // check if this works when it = end - 1
+      l = std::span{inorder.begin(), it};
+      r = std::span{it + 1, inorder.end()};
       break;
     }
   }
@@ -64,24 +66,24 @@ split_inorder_on_root(const std::vector<int> &xs, int root) {
   return {l, r};
 }
 
-std::tuple<std::vector<int>, std::vector<int>>
-get_left_and_right_subtree_from_preorder(const std::vector<int> &preorder,
+std::tuple<std::span<int>, std::span<int>>
+get_left_and_right_subtree_from_preorder(const std::span<int> preorder,
                                          size_t l_size, size_t r_size) {
   assert(preorder.size() == (l_size + r_size + 1));
 
   auto l_start = preorder.begin() + 1;
   auto l_end = l_start + l_size;
-  std::vector<int> l{l_start, l_end};
+  std::span<int> l{l_start, l_end};
 
   auto r_start = l_end;
   auto r_end = preorder.end();
-  std::vector<int> r{r_start, r_end};
+  std::span<int> r{r_start, r_end};
 
   return {l, r};
 }
 
-TreeNode *do_build_tree(const std::vector<int> &preorder,
-                        const std::vector<int> &inorder) {
+TreeNode *do_build_tree(const std::span<int> preorder,
+                        const std::span<int> inorder) {
   if (preorder.empty()) {
     return nullptr;
   }
@@ -116,6 +118,5 @@ TreeNode *build_tree(std::vector<int> &preorder, std::vector<int> &inorder) {
   assert(is_unique(inorder));
   assert(preorder.size() == inorder.size());
 
-  auto *t = do_build_tree(preorder, inorder);
-  return t;
+  return do_build_tree(preorder, inorder);
 }

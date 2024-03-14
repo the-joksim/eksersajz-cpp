@@ -556,8 +556,36 @@ TEST(Eksersajz, binTreePreorderInorder) {
 
 TEST(Eksersajz, flattenBinTree) {
   {
-    TreeNode *tree = nullptr;
-    TreeNode *expected = nullptr;
+    TreeNode *tree = new TreeNode(3);
+    TreeNode *expected = new TreeNode(3);
+
+    flatten(tree);
+
+    ASSERT_TRUE(TreeNode::equal(tree, expected));
+  }
+
+  {
+    TreeNode *tree = new TreeNode(3, new TreeNode(7), new TreeNode(9));
+    TreeNode *expected =
+        new TreeNode(3, nullptr, new TreeNode(7, nullptr, new TreeNode(9)));
+
+    flatten(tree);
+
+    ASSERT_TRUE(TreeNode::equal(tree, expected));
+  }
+
+  {
+    TreeNode *tree =
+        new TreeNode(1, new TreeNode(2, new TreeNode(3), new TreeNode(4)),
+                     new TreeNode(5, nullptr, new TreeNode(6)));
+    TreeNode *expected = new TreeNode(
+        1, nullptr,
+        new TreeNode(
+            2, nullptr,
+            new TreeNode(
+                3, nullptr,
+                new TreeNode(4, nullptr,
+                             new TreeNode(5, nullptr, new TreeNode(6))))));
 
     flatten(tree);
 

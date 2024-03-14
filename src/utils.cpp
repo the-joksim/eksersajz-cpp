@@ -70,7 +70,10 @@ namespace logging {
 std::optional<Logger> mk_basic_logger(const std::string &name,
                                       const std::string &log_file) {
   try {
-    auto logger = spdlog::basic_logger_mt(name, log_file);
+    auto logger = spdlog::get(name);
+    if (logger == nullptr) {
+      logger = spdlog::basic_logger_mt(name, log_file);
+    }
     return logger;
   } catch (std::exception &e) {
     return std::nullopt;

@@ -4,6 +4,8 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
+#include <cassert>
+#include <format>
 #include <random>
 
 std::vector<int> make_random_vec(int size, int max_val) {
@@ -25,13 +27,40 @@ TreeNode::TreeNode(int x, TreeNode *l, TreeNode *r)
 
 // FIXME:
 //  - make an iterative version
-bool equal(const TreeNode *x, const TreeNode *y) {
+bool TreeNode::equal(const TreeNode *x, const TreeNode *y) {
   if (x == nullptr && y == nullptr) {
     return true;
   }
 
   return x->val == y->val && equal(x->left, y->left) &&
          equal(x->right, y->right);
+}
+
+void TreeNode::traverse_with(TreeNode *root, TreeNode::Traversal traversal,
+                             std::function<void(TreeNode *)> f) {
+  if (root == nullptr) {
+    return;
+  }
+
+  switch (traversal) {
+  case TreeNode::Traversal::Preorder: {
+    f(root);
+    traverse_with(root->left, traversal, f);
+    traverse_with(root->right, traversal, f);
+  } break;
+  case TreeNode::Traversal::Inorder: {
+    traverse_with(root->left, traversal, f);
+    f(root);
+    traverse_with(root->right, traversal, f);
+  } break;
+  case TreeNode::Traversal::Postorder: {
+    traverse_with(root->left, traversal, f);
+    traverse_with(root->right, traversal, f);
+    f(root);
+  } break;
+  }
+
+  return;
 }
 
 namespace my_utils {
@@ -58,7 +87,7 @@ std::optional<Logger> mk_stderr_logger(const std::string &name) {
   }
 }
 
-void log_stuff(std::optional<Logger> logger, const std::string &msg,
+void log_stuff(const std::string &msg, std::optional<Logger> logger,
                LogLevel level) {
   if (!logger.has_value()) {
     // default - log to stdout

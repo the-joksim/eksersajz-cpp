@@ -8,6 +8,7 @@
 #include "eksersajz/coin_change.hpp"
 #include "eksersajz/container_with_most_water.hpp"
 #include "eksersajz/first_missing_positive.hpp"
+#include "eksersajz/flatten_bin_tree.hpp"
 #include "eksersajz/house_robber.hpp"
 #include "eksersajz/insert_delete_getrandom.hpp"
 #include "eksersajz/insert_search_position.hpp"
@@ -529,7 +530,7 @@ TEST(Eksersajz, binTreePreorderInorder) {
 
     TreeNode *expected = new TreeNode(9);
 
-    ASSERT_TRUE(equal(build_tree(preorder, inorder), expected));
+    ASSERT_TRUE(TreeNode::equal(build_tree(preorder, inorder), expected));
   }
 
   {
@@ -538,7 +539,7 @@ TEST(Eksersajz, binTreePreorderInorder) {
 
     TreeNode *expected = new TreeNode(3, new TreeNode(7), new TreeNode(9));
 
-    ASSERT_TRUE(equal(build_tree(preorder, inorder), expected));
+    ASSERT_TRUE(TreeNode::equal(build_tree(preorder, inorder), expected));
   }
 
   {
@@ -549,7 +550,18 @@ TEST(Eksersajz, binTreePreorderInorder) {
         new TreeNode(3, new TreeNode(9),
                      new TreeNode(20, new TreeNode(15), new TreeNode(7)));
 
-    ASSERT_TRUE(equal(build_tree(preorder, inorder), expected));
+    ASSERT_TRUE(TreeNode::equal(build_tree(preorder, inorder), expected));
+  }
+}
+
+TEST(Eksersajz, flattenBinTree) {
+  {
+    TreeNode *tree = nullptr;
+    TreeNode *expected = nullptr;
+
+    flatten(tree);
+
+    ASSERT_TRUE(TreeNode::equal(tree, expected));
   }
 }
 

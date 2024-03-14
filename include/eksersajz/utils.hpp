@@ -1,9 +1,7 @@
 #pragma once
 
-#include <cassert>
 #include <vector>
 
-#include <format>
 #include <optional>
 
 #include "spdlog/logger.h"
@@ -17,9 +15,14 @@ struct TreeNode {
 
   TreeNode(int x);
   TreeNode(int x, TreeNode *l, TreeNode *r);
-};
 
-bool equal(const TreeNode *x, const TreeNode *y);
+  static bool equal(const TreeNode *x, const TreeNode *y);
+
+  enum class Traversal { Preorder, Inorder, Postorder };
+
+  static void traverse_with(TreeNode *root, Traversal traversal,
+                            std::function<void(TreeNode *)> f);
+};
 
 namespace my_utils {
 
@@ -34,7 +37,8 @@ std::optional<Logger> mk_basic_logger(const std::string &name,
 
 std::optional<Logger> mk_stderr_logger(const std::string &name);
 
-void log_stuff(std::optional<Logger> logger, const std::string &msg,
+void log_stuff(const std::string &msg,
+               std::optional<Logger> logger = std::nullopt,
                LogLevel level = LogLevel::info);
 
 } // namespace logging

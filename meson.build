@@ -23,7 +23,8 @@ srcs = ['src/main.cpp',
         'src/lowest_common_ancestor.cpp',
         'src/k_smallest_pairs.cpp',
         'src/lru_cache.cpp',
-        'src/bin_tree_from_preorder_inorder.cpp'
+        'src/bin_tree_from_preorder_inorder.cpp',
+        'src/flatten_bin_tree.cpp'
         ]
 
 incdirs = ['include']
@@ -56,7 +57,8 @@ test_srcs = ['test/test_all.cpp',
              'src/lowest_common_ancestor.cpp',
              'src/k_smallest_pairs.cpp',
              'src/lru_cache.cpp',
-             'src/bin_tree_from_preorder_inorder.cpp'
+             'src/bin_tree_from_preorder_inorder.cpp',
+             'src/flatten_bin_tree.cpp'
              ]
 
 # gtest dep

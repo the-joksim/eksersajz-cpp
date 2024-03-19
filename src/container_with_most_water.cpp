@@ -40,7 +40,7 @@ int better(std::vector<int> &height) {
     int area = std::min(height[l], height[r]) * (r - l);
     max = std::max(max, area);
 
-    process_current(area, l, r);
+    // process_current(area, l, r);
 
     if (height[l] >= height[r]) {
       r--;

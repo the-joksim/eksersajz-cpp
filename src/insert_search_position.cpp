@@ -78,7 +78,7 @@ int better(std::vector<int> &nums, int t) {
     if (t <= nums[m]) {
       r = m;
     }
-    process_current(l, r);
+    // process_current(l, r);
   }
 
   if (nums[l] == t) {

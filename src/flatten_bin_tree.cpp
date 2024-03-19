@@ -77,6 +77,16 @@ void do_flatten(TreeNode *node) {
   return;
 }
 
+// Challenge: Can I make it iterative?
+//    - I can always go left or right
+//    - stopping condition?
+//    - while not next nullptr go left, else go right
+//    - if no right, go up, and repeat
+//    - "going up" requires knowing the parent of a node
+//    - if I visit the root twice (once from the left, once from the right), I'm
+//      done
+void do_flatten_iterative(TreeNode *node) {}
+
 void show_tree(TreeNode *root) {
   TreeNode::traverse_with(
       root, TreeNode::Traversal::Preorder, [](const TreeNode *n) {
@@ -89,11 +99,11 @@ void show_tree(TreeNode *root) {
 } // namespace
 
 void flatten(TreeNode *root) {
-  show_tree(root);
+  // show_tree(root);
 
   do_flatten(root);
 
-  show_tree(root);
+  // show_tree(root);
 
   return;
 }

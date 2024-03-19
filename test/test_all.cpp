@@ -600,7 +600,18 @@ TEST(Eksersajz, flattenBinTree) {
 TEST(Eksersajz, countCompleteTreeNodes) {
   {
     TreeNode *tree = new TreeNode(3);
+
     const int expected = 1;
+
+    ASSERT_EQ(count_nodes(tree), expected);
+  }
+
+  {
+    TreeNode *tree =
+        new TreeNode(3, new TreeNode(2, new TreeNode(5), new TreeNode(1)),
+                     new TreeNode(7, new TreeNode(6), nullptr));
+
+    const int expected = 6;
 
     ASSERT_EQ(count_nodes(tree), expected);
   }

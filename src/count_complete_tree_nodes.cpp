@@ -30,8 +30,12 @@
 // The tree is guaranteed to be complete.
 
 #include "eksersajz/count_complete_tree_nodes.hpp"
+#include "eksersajz/utils.hpp"
+#include <cmath>
 
 namespace {
+
+using namespace my_utils;
 
 int get_height(TreeNode *root) {
   // a complete tree has at least one node at the last level,
@@ -46,25 +50,55 @@ int get_height(TreeNode *root) {
   return h - 1;
 }
 
-int go_count(TreeNode *root, int root_i, int level, const int height) {
+void process(const TreeNode *const node, const int level) {
+  logging::log_stuff(
+      std::format("node with val {} at level {}", node->val, level));
+}
+
+struct NodeInfo {
+  int level;
+  int index;
+
+  void show(const int val) const {
+    logging::log_stuff(std::format("node with value {}, index {} at level {}",
+                                   val, index, level));
+  }
+};
+
+// The main trick is:
+//  - do a dfs, preferring to visit the right node first (we're looking for the
+//  rightmost node at the bottom level)
+//  - this search will hit the rightmost node at the bottom level (before any
+//  other node at the bottom level)
+//  - when this happens, we save the result (index computed from the parent
+//  index)
+//  - however, as we're doing dfs recursively, we have to have a way of stopping
+//  the recursion (we're supposed to do less than O(n) work)
+//  - we use a trick where upon entering the recursive function 'go' we check
+//  whether we've got the result (i.e. *res > 0)
+//
+void go(const TreeNode *const root, const NodeInfo root_info,
+        const int last_level, int *res) {
+  if (*res > 0) {
+    return;
+  }
+
   if (root == nullptr) {
-    return 0;
+    return;
   }
 
-  if (level == (height - 1)) {
-    if (root->right != nullptr) {
-      return (root_i * 2 + 2); // move to next viable sibling
-    }
-
-    if (root->left != nullptr) {
-      return (root_i * 2 + 1);
-    }
-  } else {
-    return std::max(go_count(root->left, root_i * 2 + 1, level + 1, height),
-                    go_count(root->right, root_i * 2 + 2, level + 1, height));
+  if (root_info.level == last_level) {
+    *res = root_info.index + 1;
   }
 
-  return 0;
+  go(root->right,
+     {.level = root_info.level + 1, .index = 2 * root_info.index + 2},
+     last_level, res);
+  go(root->left,
+     {.level = root_info.level + 1, .index = 2 * root_info.index + 1},
+     last_level, res);
+
+  return;
 }
 
 } // namespace
@@ -76,5 +110,9 @@ int count_nodes(TreeNode *root) {
     return 1;
   }
 
-  return go_count(root, 0, 0, h);
+  int res = 0;
+
+  go(root, {.level = 0, .index = 0}, h, &res);
+
+  return res;
 }

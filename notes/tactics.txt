@@ -1,0 +1,5 @@
+Trees
+=====
+* try bfs/dfs, possibly with changing the order of visiting nodes (e.g. visit right node first instead of left)
+* level counting may be useful
+

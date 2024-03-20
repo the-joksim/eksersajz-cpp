@@ -19,6 +19,7 @@
 #include "eksersajz/lowest_common_ancestor.hpp"
 #include "eksersajz/lru_cache.hpp"
 #include "eksersajz/merge_two_sorted_lists.hpp"
+#include "eksersajz/number_of_islands.hpp"
 #include "eksersajz/product_of_array_except_self.hpp"
 #include "eksersajz/reverse_integer.hpp"
 #include "eksersajz/utils.hpp"
@@ -643,6 +644,65 @@ TEST(Eksersajz, binTreeLevelOrder) {
     std::vector<std::vector<int>> expected = {{3}, {4, 5}, {6, 7, 8, 9}};
 
     ASSERT_EQ(level_order(tree), expected);
+  }
+}
+
+TEST(Eksersajz, numberOfIslands) {
+  {
+    std::vector<std::vector<char>> grid{};
+
+    const int expected = 0;
+
+    ASSERT_EQ(num_islands(grid), expected);
+  }
+
+  {
+    std::vector<std::vector<char>> grid{{'1', '1'}, {'1', '1'}};
+
+    const int expected = 1;
+
+    ASSERT_EQ(num_islands(grid), expected);
+  }
+
+  {
+    std::vector<std::vector<char>> grid{};
+
+    const int expected = 0;
+
+    ASSERT_EQ(num_islands(grid), expected);
+  }
+
+  {
+    std::vector<std::vector<char>> grid{{'1', '1', '1', '1', '0'},
+                                        {'1', '1', '0', '1', '0'},
+                                        {'1', '1', '0', '0', '0'},
+                                        {'0', '0', '0', '0', '0'}};
+
+    const int expected = 1;
+
+    ASSERT_EQ(num_islands(grid), expected);
+  }
+
+  {
+    std::vector<std::vector<char>> grid{{'1', '1', '0', '0', '0'},
+                                        {'1', '1', '0', '0', '0'},
+                                        {'0', '0', '1', '0', '0'},
+                                        {'0', '0', '0', '1', '1'}};
+
+    const int expected = 3;
+
+    ASSERT_EQ(num_islands(grid), expected);
+  }
+
+  {
+    std::vector<std::vector<char>> grid{{'1', '0', '1', '1', '1'},
+                                        {'0', '0', '0', '1', '0'},
+                                        {'0', '1', '0', '1', '0'},
+                                        {'1', '0', '1', '1', '1'}};
+
+    const int expected = 4;
+
+    ASSERT_EQ(num_islands(grid), expected);
   }
 }
 

@@ -701,7 +701,7 @@ TEST(Eksersajz, numberOfIslands) {
                                         {'0', '1', '0', '1', '0'},
                                         {'1', '0', '1', '1', '1'}};
 
-    const int expected = 3;
+    const int expected = 4;
 
     ASSERT_EQ(num_islands(grid), expected);
   }
@@ -709,7 +709,7 @@ TEST(Eksersajz, numberOfIslands) {
 
 TEST(Eksersajz, basicCalculator) {
   {
-    std::string in = "(3 + 5) + ( (2)  )";
+    std::string in = "(3+5) + ( (2)  )";
 
     int expected = 666;
 

@@ -38,8 +38,10 @@ namespace {
 
 class Scanner {
 public:
-  Scanner(std::string_view s) : in(s) {}
+  Scanner() = default;
   ~Scanner() = default;
+
+  void init(std::string_view s) { in = s; }
 
   std::string_view lookahead() { return next_token(); }
 
@@ -56,6 +58,12 @@ private:
   }
 
   bool is_paren(const char c) const { return c == '(' or c == ')'; }
+
+  bool is_operator(const char c) const { return c == '+' or c == '-'; }
+
+  bool is_special_char(const char c) const {
+    return is_paren(c) or is_operator(c);
+  }
 
   void ignore_empty() {
     if (is_done()) {
@@ -83,15 +91,15 @@ private:
 
     const char *start = std::addressof(in[0]);
 
-    // parens treated as single-character tokens
-    if (is_paren(in[0])) {
+    // handle parens, and operators ('+', '-')
+    if (is_special_char(in[0])) {
       in.remove_prefix(1);
       return {start, 1};
     }
 
-    // handle non-paren tokens
+    // handle non-special tokens
     size_t ts = 0;
-    while (!is_done() and !is_empty_char(in[0]) and !is_paren(in[0])) {
+    while (!is_done() and !is_empty_char(in[0]) and !is_special_char(in[0])) {
       ts++;
       in.remove_prefix(1);
     }
@@ -120,8 +128,8 @@ public:
   Parser() = default;
   ~Parser() = default;
 
-  ParseResult parse(std::string_view s) {
-    res = ParseResult{s};
+  ParseResult parse(std::string_view in) {
+    scanner.init(in);
     // do actual parsing
     return res;
   }
@@ -129,6 +137,8 @@ public:
 private:
   ParseResult res{};
   bool done{false};
+
+  Scanner scanner;
 
   void match_expr() {
     match_paren();
@@ -159,16 +169,18 @@ public:
 
   int eval(ParseResult parsed) { return 0; }
 
-  int calculate(std::string s) { return eval(parser.parse(s)); }
+  int calculate(std::string_view in) { return eval(parser.parse(in)); }
 
 private:
-  Parser parser{};
+  Parser parser;
 };
 
 } // namespace
 
 int calculate(std::string s) {
-  Scanner scanner{s};
+
+  Scanner scanner{};
+  scanner.init(s);
 
   std::string_view token{};
   while (!(token = scanner.lookahead()).empty()) {

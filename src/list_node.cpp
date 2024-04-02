@@ -10,7 +10,9 @@ ListNode::ListNode(int x, ListNode *next) : val(x), next(next) {}
 bool has_more_elems(ListNode *x) { return x->next != nullptr; }
 
 void traverse(ListNode *l, std::function<void(int)> f) {
-  assert(l != nullptr);
+  if (l != nullptr) {
+    return;
+  }
 
   do {
     f(l->val);

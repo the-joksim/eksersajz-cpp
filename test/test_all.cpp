@@ -2,6 +2,7 @@
 #include <map>
 
 #include "eksersajz/add_two_numbers.hpp"
+#include "eksersajz/basic_calc.hpp"
 #include "eksersajz/bin_tree_from_preorder_inorder.hpp"
 #include "eksersajz/bin_tree_level_order.hpp"
 #include "eksersajz/climbing_stairs.hpp"
@@ -700,9 +701,35 @@ TEST(Eksersajz, numberOfIslands) {
                                         {'0', '1', '0', '1', '0'},
                                         {'1', '0', '1', '1', '1'}};
 
-    const int expected = 4;
+    const int expected = 3;
 
     ASSERT_EQ(num_islands(grid), expected);
+  }
+}
+
+TEST(Eksersajz, basicCalculator) {
+  {
+    std::string in = "(3 + 5) + ( (2)  )";
+
+    int expected = 666;
+
+    ASSERT_EQ(calculate(in), expected);
+  }
+
+  {
+    std::string in = "(((666)))";
+
+    int expected = 666;
+
+    ASSERT_EQ(calculate(in), expected);
+  }
+
+  {
+    std::string in = "1 + (((665)))";
+
+    int expected = 666;
+
+    ASSERT_EQ(calculate(in), expected);
   }
 }
 

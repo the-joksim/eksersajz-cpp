@@ -1,13 +1,9 @@
 #include "eksersajz/merge_two_sorted_lists.hpp"
 
-#include <cassert>
-
 bool is_sorted(ListNode *x) { return true; }
 
 ListNode *merge(ListNode *x, ListNode *y) {
   // we insert the elems from y to x
-  assert(x != nullptr or y != nullptr);
-
   if (y == nullptr) {
     return x;
   }

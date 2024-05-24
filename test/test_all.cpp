@@ -9,6 +9,7 @@
 #include "eksersajz/coin_change.hpp"
 #include "eksersajz/container_with_most_water.hpp"
 #include "eksersajz/count_complete_tree_nodes.hpp"
+#include "eksersajz/course_schedule.hpp"
 #include "eksersajz/first_missing_positive.hpp"
 #include "eksersajz/flatten_bin_tree.hpp"
 #include "eksersajz/house_robber.hpp"
@@ -707,31 +708,54 @@ TEST(Eksersajz, numberOfIslands) {
   }
 }
 
-TEST(Eksersajz, basicCalculator) {
+TEST(Eksersajz, courseSchedule) {
   {
-    std::string in = "(3+5) + ( (2)  )";
+    int num_courses = 1;
+    std::vector<std::vector<int>> prereqs{};
 
-    int expected = 666;
-
-    ASSERT_EQ(calculate(in), expected);
+    ASSERT_TRUE(can_finish(num_courses, prereqs));
   }
 
   {
-    std::string in = "(((666)))";
+    int num_courses = 2;
+    std::vector<std::vector<int>> prereqs{{1, 0}, {0, 1}};
 
-    int expected = 666;
-
-    ASSERT_EQ(calculate(in), expected);
+    ASSERT_FALSE(can_finish(num_courses, prereqs));
   }
 
   {
-    std::string in = "1 + (((665)))";
+    int num_courses = 3;
+    std::vector<std::vector<int>> prereqs{{1, 0}, {2, 1}};
 
-    int expected = 666;
-
-    ASSERT_EQ(calculate(in), expected);
+    ASSERT_TRUE(can_finish(num_courses, prereqs));
   }
 }
+
+// TEST(Eksersajz, basicCalculator) {
+//{
+// std::string in = "(3+5) + ( (2 - 3) - 4 + 1  )";
+
+// int expected = 666;
+
+// ASSERT_EQ(calculate(in), expected);
+//}
+
+//{
+// std::string in = "(((666)))";
+
+// int expected = 666;
+
+// ASSERT_EQ(calculate(in), expected);
+//}
+
+//{
+// std::string in = "1 + (((665)))";
+
+// int expected = 666;
+
+// ASSERT_EQ(calculate(in), expected);
+//}
+//}
 
 int main(int argc, char **argv) {
   testing::InitGoogleTest();

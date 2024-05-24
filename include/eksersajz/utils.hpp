@@ -1,8 +1,7 @@
 #pragma once
 
-#include <vector>
-
 #include <optional>
+#include <vector>
 
 #include "spdlog/logger.h"
 
@@ -41,6 +40,7 @@ void log_stuff(const std::string &msg,
                std::optional<Logger> logger = std::nullopt,
                LogLevel level = LogLevel::info);
 
+void log_function(const char *fun_name);
 } // namespace logging
 
 } // namespace my_utils

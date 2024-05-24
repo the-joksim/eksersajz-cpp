@@ -7,6 +7,7 @@
 #include <cassert>
 #include <format>
 #include <random>
+#include <source_location>
 
 std::vector<int> make_random_vec(int size, int max_val) {
   assert(size >= 0);
@@ -126,6 +127,10 @@ void log_stuff(const std::string &msg, std::optional<Logger> logger,
         std::format("unknown logging level: {}", static_cast<uint8_t>(level)));
     break;
   }
+}
+
+void log_function(const char *fun_name) {
+  log_stuff(std::format("In function {}", fun_name));
 }
 
 } // namespace logging

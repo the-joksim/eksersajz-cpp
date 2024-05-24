@@ -28,7 +28,8 @@ srcs = ['src/main.cpp',
         'src/count_complete_tree_nodes.cpp',
         'src/bin_tree_level_order.cpp',
         'src/number_of_islands.cpp',
-        'src/basic_calc.cpp'
+        'src/basic_calc.cpp',
+        'src/course_schedule.cpp'
         ]
 
 incdirs = ['include']
@@ -66,7 +67,8 @@ test_srcs = ['test/test_all.cpp',
              'src/count_complete_tree_nodes.cpp',
              'src/bin_tree_level_order.cpp',
              'src/number_of_islands.cpp',
-             'src/basic_calc.cpp'
+             'src/basic_calc.cpp',
+             'src/course_schedule.cpp'
              ]
 
 # gtest dep
